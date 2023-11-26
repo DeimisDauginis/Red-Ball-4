@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    public float speedLimit  =10;
     public float moveForce;
     public float jumpSpeed;
     Rigidbody2D rb;
@@ -15,7 +16,11 @@ public class Ball : MonoBehaviour
     void Update()
     {
         var hor = Input.GetAxisRaw("Horizontal");
-        rb.AddForce(new Vector2(hor, 0) * moveForce);
+        rb.AddForce(new Vector2(hor, 0) * moveForce * Time.deltaTime);
+
+        // limit speed horizontally
+        if (rb.velocity.x > speedLimit) rb.velocity = new Vector2(speedLimit, rb.velocity.y);
+        if (rb.velocity.x < -speedLimit) rb.velocity = new Vector2(-speedLimit, rb.velocity.y);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
