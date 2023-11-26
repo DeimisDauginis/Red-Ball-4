@@ -7,14 +7,17 @@ public class Ball : MonoBehaviour
     public float jumpSpeed;
     Rigidbody2D rb;
     bool isGrounded;
+    public GameObject gameManager;
 
     void Start()
     {
+        Instantiate(gameManager);
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
+        // 60FPS
         var hor = Input.GetAxisRaw("Horizontal");
         rb.AddForce(new Vector2(hor, 0) * moveForce * Time.deltaTime);
 
